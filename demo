@@ -1,0 +1,32 @@
+//1.创建一个QDomDocument对象
+    QDomDocument doc;
+
+    //向对象中添加xml的头部
+    QDomProcessingInstruction head=doc.createProcessingInstruction("xml","version='1.0' encoding='utf-8'");
+    doc.appendChild(head);
+
+
+    //3.向xml中添加根节点（标签节点、元素节点）
+    QDomElement rootEle=doc.createElement("UserInfo");
+    doc.appendChild(rootEle);
+
+    //4.向UserInfo（根）节点中添加子节点
+    QDomElement nameEle=doc.createElement("username");
+    nameEle.setAttribute("id",1001);
+    QDomText text=doc.createTextNode("张无忌");
+
+    nameEle.appendChild(text);
+    rootEle.appendChild(nameEle);
+
+    QDomElement ageEle=doc.createElement("age");
+    QDomText t=doc.createTextNode("25");
+    ageEle.appendChild(t);
+    rootEle.appendChild(ageEle);
+
+    //5.将doc写入xml文件中
+    QFile file("D:/a.xml");
+    file.open(QIODevice::WriteOnly);
+
+    //使用文件流将doc写入到xml文件中
+    QTextStream out(&file);
+    doc.save(out,4);
